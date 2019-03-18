@@ -3,7 +3,6 @@
 #include "spimcore.h"
 
 /* ALU */
-/* 10 Points */
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero){
     // Switch to control which ALU control gets executed
 	switch ((int) ALUControl)
@@ -65,7 +64,6 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero){
 }
 
 /* instruction fetch */
-/* 10 Points */
 int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction){
     //Check the proper part for the memory index
 	unsigned MemoryIndex = PC >> 2; //right shift 2 to divide by 4
@@ -75,12 +73,11 @@ int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction){
         return 0;
     }
     else{//If not Halt
-		return 1;
-	}
+	return 1;
+    }
 }
 
 /* instruction partition */
-/* 10 Points */
 void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsigned *r2, unsigned *r3, unsigned *funct, unsigned *offset, unsigned *jsec){
 	unsigned rPartition		    = 0x1f; //5 bits total
 	unsigned functopPartition	= 0x0000003f; //6 bits total
@@ -98,127 +95,125 @@ void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsi
 }
 
 /* instruction decode */
-/* 15 Points */
 int instruction_decode(unsigned op,struct_controls *controls){
         switch(op){
-    //R Type
-        case 0: //000 000
-            controls->RegDst = 1;
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 7;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 0;
-            controls->RegWrite = 1;
-            break;
-    //Jump
-        case 2:  //j 000 010
-            controls->RegDst = 0;
-            controls->Jump = 1;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 0;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 0;
-            controls->RegWrite = 0;
-            break;
-    //Branch if equal
-        case 4:  //beq 000 100
-            controls->RegDst = 2;
-            controls->Jump = 0;
-            controls->Branch = 1;
-            controls->MemRead = 0;
-            controls->MemtoReg = 2;
-            controls->ALUOp = 1;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 0;
-            controls->RegWrite = 0;
-            break;
-    //Add immediate
-        case 8:   // addi 001 000
-            controls->RegDst = 0;
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 0;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 1;
-            controls->RegWrite = 1;
-            break;
-    //Set less than immediate
-        case 10:  //slti 010 010
-            controls->RegDst = 0;//1
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 2;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 1;
-            controls->RegWrite = 1;
-            break;
-    //Set less than immediate unsigned
-        case 11:  //sltiu 001 011
-            controls->RegDst = 0;//1
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 3;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 1;//0
-            controls->RegWrite = 1;
-            break;
-    //load upper imediate
-        case 15: //lui 001 111
-            controls->RegDst = 0;
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 0;
-            controls->ALUOp = 6;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 1;
-            controls->RegWrite = 1;
-            break;
-    //Load word
-        case 35:  //lw 100 011
-            controls->RegDst = 0;
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 1;
-            controls->MemtoReg = 1;
-            controls->ALUOp = 0;
-            controls->MemWrite = 0;
-            controls->ALUSrc = 1;
-            controls->RegWrite = 1;
-            break;
-    //Store word
-        case 43:  //sw 101 011
-            controls->RegDst = 2;
-            controls->Jump = 0;
-            controls->Branch = 0;
-            controls->MemRead = 0;
-            controls->MemtoReg = 2;
-            controls->ALUOp = 0;
-            controls->MemWrite = 1;
-            controls->ALUSrc = 1;
-            controls->RegWrite = 0;
-            break;
+		//R Type
+		case 0: //000 000
+		    controls->RegDst = 1;
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 7;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 0;
+		    controls->RegWrite = 1;
+		    break;
+		//Jump
+		case 2:  //j 000 010
+		    controls->RegDst = 0;
+		    controls->Jump = 1;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 0;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 0;
+		    controls->RegWrite = 0;
+		    break;
+		//Branch if equal
+		case 4:  //beq 000 100
+		    controls->RegDst = 2;
+		    controls->Jump = 0;
+		    controls->Branch = 1;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 2;
+		    controls->ALUOp = 1;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 0;
+		    controls->RegWrite = 0;
+		    break;
+		//Add immediate
+		case 8:   // addi 001 000
+		    controls->RegDst = 0;
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 0;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 1;
+		    controls->RegWrite = 1;
+		    break;
+		//Set less than immediate
+		case 10:  //slti 010 010
+		    controls->RegDst = 0;//1
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 2;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 1;
+		    controls->RegWrite = 1;
+		    break;
+		 //Set less than immediate unsigned
+		case 11:  //sltiu 001 011
+		    controls->RegDst = 0;//1
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 3;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 1;//0
+		    controls->RegWrite = 1;
+		    break;
+		//load upper imediate
+		case 15: //lui 001 111
+		    controls->RegDst = 0;
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 0;
+		    controls->ALUOp = 6;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 1;
+		    controls->RegWrite = 1;
+		    break;
+		 //Load word
+		case 35:  //lw 100 011
+		    controls->RegDst = 0;
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 1;
+		    controls->MemtoReg = 1;
+		    controls->ALUOp = 0;
+		    controls->MemWrite = 0;
+		    controls->ALUSrc = 1;
+		    controls->RegWrite = 1;
+		    break;
+		//Store word
+		case 43:  //sw 101 011
+		    controls->RegDst = 2;
+		    controls->Jump = 0;
+		    controls->Branch = 0;
+		    controls->MemRead = 0;
+		    controls->MemtoReg = 2;
+		    controls->ALUOp = 0;
+		    controls->MemWrite = 1;
+		    controls->ALUSrc = 1;
+		    controls->RegWrite = 0;
+		    break;
 
-        default://Return 1 if Halt
-            return 1;
+		default://Return 1 if Halt
+		    return 1;
 
-     }
-       return 0;
+	     	}
+       		return 0;
 }
 
 /* Read Register */
-/* 5 Points */
 void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigned *data2){
     //  Read the registers addressed by r1 and r2 from Reg, and write the read values to data1 and data2 respectively
 	*data1 = Reg[r1];
@@ -226,7 +221,6 @@ void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigne
 }
 
 /* Sign Extend */
-/* 10 Points */
 void sign_extend(unsigned offset,unsigned *extended_value){
     //If negative sign extend for negative
 	unsigned extend1s = 0xFFFF0000;
@@ -243,9 +237,8 @@ void sign_extend(unsigned offset,unsigned *extended_value){
 }
 
 /* ALU operations */
-/* 10 Points */
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero){
-    //Check which data we are opperating on by ALU src
+   	//Check which data we are opperating on by ALU src
 	if(ALUSrc == 1){
 		data2 = extended_value;
 	}
@@ -309,7 +302,6 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
 }
 
 /* Read / Write Memory */
-/* 10 Points */
 int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsigned *memdata,unsigned *Mem){
     //if reading from memory
 	if (MemRead == 1) {
@@ -339,7 +331,6 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
 }
 
 /* Write Register */
-/* 10 Points */
 void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg){
     //Check if writing
 	if(RegWrite == 1){
@@ -367,7 +358,6 @@ void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,
 }
 
 /* PC update */
-/* 10 Points */
 void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char Zero,unsigned *PC){
     // increment the PC by 4 always
 	*PC += 4;
