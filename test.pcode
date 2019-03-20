@@ -1,0 +1,40 @@
+br 1
+movi r0 2
+wr r0
+movi r0 4
+movi r1 3
+add r0 r1 r0
+wr r0
+movi r0 6
+movi r1 5
+mul r0 r1 r0
+wr r0
+movi r0 9
+movi r1 8
+mul r0 r1 r0
+movi r1 7
+add r0 r1 r0
+wr r0
+movi r0 12
+movi r1 11
+sub r0 r1 r0
+movi r1 13
+div r0 r0 r1
+movi r1 10
+add r0 r1 r0
+wr r0
+movi r0 18
+movi r1 17
+mod r0 r1 r0
+movi r1 16
+movi r2 15
+mul r1 r2 r1
+sub r0 r1 r0
+movi r2 19
+div r0 r0 r2
+movi r2 14
+add r0 r2 r0
+movi r2 20
+mod r0 r0 r2
+wr r0
+hlt
